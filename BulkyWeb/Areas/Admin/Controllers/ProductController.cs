@@ -1,4 +1,5 @@
 ﻿using Bulky.DataAccess.Data;
+using Bulky.DataAccess.Repository;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.ViewModels;
@@ -139,5 +140,19 @@ namespace BulkyWeb.Areas.Admin.Controllers
             TempData["success"] = "Product deleted successfully.";
             return RedirectToAction("Index");
         }
+
+        #region API Calls
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> objProductList = _unitOfWork.Product.GetAll("Category").ToList();
+
+            return Json(new { data = objProductList });
+        }
+
+        #endregion
     }
+
+
+
 }
